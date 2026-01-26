@@ -1,4 +1,8 @@
 <Solution>
+    <Folder Name="/.slnprops/">
+        <File Path="common.props" />
+        <File Path="configureawait.props" />
+    </Folder>
     <Folder Name="/modules/" />
     <Folder Name="/modules/TTShang.AntDesignTheme/">
         <Project Path="modules/TTShang.AntDesignTheme/src/TTShang.AntDesignTheme.Application.Contracts/TTShang.AntDesignTheme.Application.Contracts.csproj" />
@@ -85,6 +89,7 @@
         <Project Path="modules/TTShang.TenantManagement/src/TTShang.TenantManagement.Installer/TTShang.TenantManagement.Installer.csproj" />
     </Folder>
     <Folder Name="/src/">
+        <Project Path="src/TTShang.AntDesignUI/TTShang.AntDesignUI.csproj" />
         <Project Path="src/TTShang.Application.Contracts/TTShang.Application.Contracts.csproj" />
         <Project Path="src/TTShang.Application/TTShang.Application.csproj" />
         <Project Path="src/TTShang.Blazor.Client/TTShang.Blazor.Client.csproj" />
