@@ -1,0 +1,9 @@
+{
+  "id": "89418d29-52a2-474d-af0d-854639e79c4c",
+  "template": "empty",
+  "modules": {
+    "TTShang.FeatureManagement": {
+      "path": "TTShang.FeatureManagement.abpmdl"
+    }
+  }
+}

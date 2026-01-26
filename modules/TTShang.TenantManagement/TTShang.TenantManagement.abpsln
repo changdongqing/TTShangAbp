@@ -1,0 +1,9 @@
+{
+  "id": "020e143a-0f0c-4294-b498-1f8c6b3498ae",
+  "template": "empty",
+  "modules": {
+    "TTShang.TenantManagement": {
+      "path": "TTShang.TenantManagement.abpmdl"
+    }
+  }
+}
