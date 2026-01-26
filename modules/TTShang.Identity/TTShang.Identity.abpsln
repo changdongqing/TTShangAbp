@@ -1,9 +1,0 @@
-{
-  "id": "49c1c6ab-4d58-429d-930f-d5530961e5aa",
-  "template": "empty",
-  "modules": {
-    "TTShang.Identity": {
-      "path": "TTShang.Identity.abpmdl"
-    }
-  }
-}
