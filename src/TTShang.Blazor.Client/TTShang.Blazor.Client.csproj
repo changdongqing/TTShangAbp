@@ -9,29 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazorise.Bootstrap5" Version="1.8.9" />
-    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.8.9" />
-    <PackageReference Include="Blazorise.Components" Version="1.8.9" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Autofac.WebAssembly" Version="10.0.2" />
-    <PackageReference Include="Volo.Abp.SettingManagement.Blazor.WebAssembly" Version="10.0.2" />
-    <PackageReference Include="Volo.Abp.FeatureManagement.Blazor.WebAssembly" Version="10.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.AspNetCore.Components.WebAssembly.LeptonXLiteTheme" Version="5.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Volo.Abp.Identity.Blazor.WebAssembly" Version="10.0.2" />
-    <PackageReference Include="Volo.Abp.TenantManagement.Blazor.WebAssembly" Version="10.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\modules\TTShang.AntDesignTheme\src\TTShang.AntDesignTheme.Blazor.WebAssembly\TTShang.AntDesignTheme.Blazor.WebAssembly.csproj" />
+    <ProjectReference Include="..\..\modules\TTShang.FeatureManagement\src\TTShang.FeatureManagement.Blazor.WebAssembly\TTShang.FeatureManagement.Blazor.WebAssembly.csproj" />
+    <ProjectReference Include="..\..\modules\TTShang.IdentityManagement\src\TTShang.IdentityManagement.Blazor.WebAssembly\TTShang.IdentityManagement.Blazor.WebAssembly.csproj" />
+    <ProjectReference Include="..\..\modules\TTShang.SettingManagement\src\TTShang.SettingManagement.Blazor.WebAssembly\TTShang.SettingManagement.Blazor.WebAssembly.csproj" />
+    <ProjectReference Include="..\..\modules\TTShang.TenantManagement\src\TTShang.TenantManagement.Blazor.WebAssembly\TTShang.TenantManagement.Blazor.WebAssembly.csproj" />
     <ProjectReference Include="..\..\src\TTShang.HttpApi.Client\TTShang.HttpApi.Client.csproj" />
   </ItemGroup>
 

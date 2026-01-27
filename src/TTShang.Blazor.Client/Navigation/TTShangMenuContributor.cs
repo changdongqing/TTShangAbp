@@ -8,10 +8,14 @@ using Volo.Abp.Account.Localization;
 using Volo.Abp.UI.Navigation;
 using Localization.Resources.AbpUi;
 using Volo.Abp.Authorization.Permissions;
-using Volo.Abp.SettingManagement.Blazor.Menus;
+//using Volo.Abp.SettingManagement.Blazor.Menus;
 using Volo.Abp.Users;
-using Volo.Abp.TenantManagement.Blazor.Navigation;
-using Volo.Abp.Identity.Blazor;
+using TTShang.TenantManagement.Blazor;
+using TTShang.IdentityManagement.Blazor;
+using TTShang.SettingManagement.Blazor;
+using AntDesign;
+//using Volo.Abp.TenantManagement.Blazor.Navigation;
+//using Volo.Abp.Identity.Blazor;
 
 namespace TTShang.Blazor.Client.Navigation;
 
@@ -49,7 +53,7 @@ public class TTShangMenuContributor : IMenuContributor
             TTShangMenus.Home,
             l["Menu:Home"],
             "/",
-            icon: "fas fa-home",
+            icon: IconType.Outline.Home,
             order: 1
         ));
         
@@ -75,7 +79,7 @@ public class TTShangMenuContributor : IMenuContributor
             var authServerUrl = _configuration["AuthServer:Authority"] ?? "";
             var accountResource = context.GetLocalizer<AccountResource>();
 
-            context.Menu.AddItem(new ApplicationMenuItem("Account.Manage", accountResource["MyAccount"], $"{authServerUrl.EnsureEndsWith('/')}Account/Manage", icon: "fa fa-cog", order: 900,  target: "_blank").RequireAuthenticated());
+            context.Menu.AddItem(new ApplicationMenuItem("Account.Manage", accountResource["MyAccount"], $"{authServerUrl.EnsureEndsWith('/')}Account/Manage", icon: IconType.Outline.Setting, order: 900,  target: "_blank").RequireAuthenticated());
 
         }
         else
