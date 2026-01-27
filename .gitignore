@@ -272,3 +272,4 @@ src/TTShang.Blazor.Server.Tiered/Logs/*
 # IdentityServer temp files
 tempkey.rsa
 tempkey.jwk
+/src/TTShang.Blazor/Logs/logs.txt
