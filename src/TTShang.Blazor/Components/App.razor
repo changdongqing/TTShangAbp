@@ -1,5 +1,6 @@
 ﻿@using System.Globalization
 @using Microsoft.Extensions.Hosting
+@using Microsoft.Extensions.Configuration
 @* @using Volo.Abp.AspNetCore.Components.Server.LeptonXLiteTheme.Bundling *@
 @using Volo.Abp.Localization
 @* @using Volo.Abp.AspNetCore.Components.Web.Theming.Bundling *@
@@ -7,8 +8,10 @@
 @using  TTShang.AntDesignTheme.Blazor.Server.Bundling
 
 @inject IHostEnvironment Env
+@inject IConfiguration Configuration
 @{
     var rtl = CultureHelper.IsRtl ? "rtl" : string.Empty;
+    var apiBaseUrl = Configuration["App:SelfUrl"] ?? "";
 }
 
 <!DOCTYPE html>
@@ -19,9 +22,13 @@
     <title>TTShang</title>
     <base href="/" />
 
-    <!-- Resource hints for better performance -->
-    <link rel="dns-prefetch" href="//localhost:44367">
-    <link rel="preconnect" href="https://localhost:44367" crossorigin>
+    @if (!string.IsNullOrEmpty(apiBaseUrl))
+    {
+        <!-- Resource hints for better performance -->
+        var uri = new Uri(apiBaseUrl);
+        <link rel="dns-prefetch" href="@($"//{uri.Host}")">
+        <link rel="preconnect" href="@apiBaseUrl" crossorigin>
+    }
 
     <AbpStyles BundleName="@BlazorAntDesignThemeBundles.Styles.Global" WebAssemblyStyleFiles="GlobalStyles" @rendermode="InteractiveAuto" />
 

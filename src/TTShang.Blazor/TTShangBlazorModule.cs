@@ -277,9 +277,11 @@ public class TTShangBlazorModule : AbpModule
                     if (path != null)
                     {
                         var extension = Path.GetExtension(path).ToLowerInvariant();
+                        var fileName = Path.GetFileName(path).ToLowerInvariant();
                         
                         // Long-term caching for versioned files
-                        if (path.Contains("_content") || path.Contains(".min."))
+                        if (path.Contains(Path.DirectorySeparatorChar + "_content" + Path.DirectorySeparatorChar) || 
+                            fileName.Contains(".min."))
                         {
                             ctx.Context.Response.Headers[HeaderNames.CacheControl] = "public,max-age=31536000,immutable";
                         }
