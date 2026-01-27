@@ -1,13 +1,12 @@
-using Volo.Abp.AspNetCore.Components.WebAssembly.Theming.Bundling;
-using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
+﻿using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.Modularity;
 
 namespace TTShang.AntDesignTheme.Blazor.WebAssembly.Bundling;
 
 [DependsOn(
-    typeof(AbpAspNetCoreComponentsWebAssemblyThemingBundlingModule)
+    typeof(AbpAspNetCoreMvcUiBundlingAbstractionsModule)
 )]
-public class AntDesignThemeBlazorWebAssemblyBundlingModule : AbpModule
+public class AbpAspNetCoreComponentsWebAssemblyAntDesignThemeBundlingModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
@@ -30,7 +29,7 @@ public class AntDesignThemeBlazorWebAssemblyBundlingModule : AbpModule
                 {
                     bundle.AddContributors(typeof(BlazorWebAssemblyScriptContributor));
                 });
-
+            
             options
                 .StyleBundles
                 .Add(BlazorWebAssemblyAntDesignThemeBundles.Styles.Global, bundle =>
