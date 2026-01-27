@@ -186,6 +186,9 @@ public class TTShangBlazorModule : AbpModule
         {
             // Blazor Web App
             options.Parameters.InteractiveAuto = true;
+            
+            // Enable minification in production
+            options.MinificationIgnoredFiles.Add("/swagger/");
 
             // MVC UI
             options.StyleBundles.Configure(

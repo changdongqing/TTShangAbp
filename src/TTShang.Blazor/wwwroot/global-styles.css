@@ -25,3 +25,14 @@
     --lpx-logo: url('/images/logo/leptonxlite/logo-dark-thumbnail.png');
     background-position: left;
 }
+
+/* Lazy load images for better performance */
+img[loading="lazy"] {
+    /* Provide a smooth loading experience */
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+img[loading="lazy"]:not([src]) {
+    opacity: 0;
+}
