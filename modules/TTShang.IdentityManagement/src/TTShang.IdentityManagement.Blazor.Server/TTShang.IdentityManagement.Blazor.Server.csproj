@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <Import Project="..\..\common.props"/>
+  <Import Project="..\..\common.props" />
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -8,11 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.AspNetCore.Components.Server.Theming" Version="10.0.2"/>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\TTShang.IdentityManagement.Blazor\TTShang.IdentityManagement.Blazor.csproj"/>
+    <ProjectReference Include="..\..\..\TTShang.AntDesignTheme\src\TTShang.AntDesignTheme.Blazor.Server\TTShang.AntDesignTheme.Blazor.Server.csproj" />
+    <ProjectReference Include="..\TTShang.IdentityManagement.Blazor\TTShang.IdentityManagement.Blazor.csproj" />
   </ItemGroup>
 
 </Project>
