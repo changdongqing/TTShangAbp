@@ -6,15 +6,19 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using OpenIddict.Server.AspNetCore;
 using OpenIddict.Validation.AspNetCore;
 using System;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using TTShang.AntDesignTheme.Blazor.Server;
 using TTShang.AntDesignTheme.Blazor.Server.Bundling;
@@ -148,6 +152,8 @@ public class TTShangBlazorModule : AbpModule
         ConfigureAuthentication(context);
         ConfigureUrls(configuration);
         ConfigureBundles();
+        ConfigureResponseCompression(context);
+        ConfigureStaticFiles(context);
         ConfigureVirtualFileSystem(hostingEnvironment);
         ConfigureSwaggerServices(context.Services);
         ConfigureAutoApiControllers();
@@ -219,6 +225,82 @@ public class TTShangBlazorModule : AbpModule
         });
     }
 
+    private void ConfigureResponseCompression(ServiceConfigurationContext context)
+    {
+        context.Services.AddResponseCompression(options =>
+        {
+            options.EnableForHttps = true;
+            options.Providers.Add<BrotliCompressionProvider>();
+            options.Providers.Add<GzipCompressionProvider>();
+            options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
+            {
+                "image/svg+xml",
+                "application/json",
+                "application/javascript",
+                "text/css",
+                "text/html",
+                "text/json",
+                "text/plain",
+                "font/woff",
+                "font/woff2"
+            });
+        });
+
+        context.Services.Configure<BrotliCompressionProviderOptions>(options =>
+        {
+            options.Level = CompressionLevel.Fastest;
+        });
+
+        context.Services.Configure<GzipCompressionProviderOptions>(options =>
+        {
+            options.Level = CompressionLevel.SmallestSize;
+        });
+    }
+
+    private void ConfigureStaticFiles(ServiceConfigurationContext context)
+    {
+        var hostingEnvironment = context.Services.GetHostingEnvironment();
+        
+        // Only configure caching in production
+        if (!hostingEnvironment.IsDevelopment())
+        {
+            context.Services.Configure<StaticFileOptions>(options =>
+            {
+                options.OnPrepareResponse = ctx =>
+                {
+                    // Cache static files for 1 year (for files with content hash in filename)
+                    // Cache images for 30 days
+                    var path = ctx.File.PhysicalPath;
+                    if (path != null)
+                    {
+                        var extension = Path.GetExtension(path).ToLowerInvariant();
+                        
+                        // Long-term caching for versioned files
+                        if (path.Contains("_content") || path.Contains(".min."))
+                        {
+                            ctx.Context.Response.Headers[HeaderNames.CacheControl] = "public,max-age=31536000,immutable";
+                        }
+                        // Cache images for 30 days
+                        else if (extension is ".png" or ".jpg" or ".jpeg" or ".gif" or ".svg" or ".ico" or ".webp")
+                        {
+                            ctx.Context.Response.Headers[HeaderNames.CacheControl] = "public,max-age=2592000";
+                        }
+                        // Cache CSS/JS for 7 days (these can change more frequently)
+                        else if (extension is ".css" or ".js")
+                        {
+                            ctx.Context.Response.Headers[HeaderNames.CacheControl] = "public,max-age=604800";
+                        }
+                        // Cache fonts for 1 year
+                        else if (extension is ".woff" or ".woff2" or ".ttf" or ".eot")
+                        {
+                            ctx.Context.Response.Headers[HeaderNames.CacheControl] = "public,max-age=31536000,immutable";
+                        }
+                    }
+                };
+            });
+        }
+    }
+
     private void ConfigureVirtualFileSystem(IWebHostEnvironment hostingEnvironment)
     {
         if (hostingEnvironment.IsDevelopment())
@@ -288,6 +370,9 @@ public class TTShangBlazorModule : AbpModule
     {
         var env = context.GetEnvironment();
         var app = context.GetApplicationBuilder();
+
+        // Enable response compression early in the pipeline
+        app.UseResponseCompression();
 
         app.Use(async (ctx, next) =>
         {
