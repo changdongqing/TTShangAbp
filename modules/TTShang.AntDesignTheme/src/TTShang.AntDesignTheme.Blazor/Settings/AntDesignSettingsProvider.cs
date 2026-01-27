@@ -17,7 +17,7 @@ public class AntDesignSettingsProvider : IAntDesignSettingsProvider, IScopedDepe
     // protected ISettingProvider SettingProvider { get; set; }
     
     [Inject]
-    public IOptions<AntDesignThemeOptions> Options { get; set; }
+    public IOptions<AbpAntDesignThemeOptions> Options { get; set; }
     
     public delegate Task AntDesignSettingChangedHandler();
     

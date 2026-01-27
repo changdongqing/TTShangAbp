@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace TTShang.AntDesignTheme.Blazor;
+namespace TTShang.AntDesignTheme.Blazor.Bundling;
 
 public interface IComponentBundleManager
 {

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Options;
 using Volo.Abp.Ui.LayoutHooks;
 
-namespace  TTShang.AntDesignTheme.Blazor.Components.LayoutHooks;
+namespace TTShang.AntDesignTheme.Blazor.Components.LayoutHooks;
 
 public partial class LayoutHook : ComponentBase
 {
