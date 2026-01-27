@@ -1,8 +1,7 @@
 ﻿using TTShang.AntDesignTheme.Blazor.Server.Bundling;
+using TTShang.AntDesignTheme.Blazor;
 using TTShang.AntDesignTheme.Blazor.Toolbars;
 using Volo.Abp.AspNetCore.Components.Server;
-using Volo.Abp.AspNetCore.Components.Server.Theming;
-using Volo.Abp.AspNetCore.Components.Server.Theming.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Packages;
 using Volo.Abp.Modularity;
@@ -13,9 +12,9 @@ namespace TTShang.AntDesignTheme.Blazor.Server;
     typeof(AbpAspNetCoreComponentsServerModule),
     typeof(AbpAspNetCoreMvcUiPackagesModule),
     typeof(AbpAspNetCoreMvcUiBundlingModule),
-    typeof(AntDesignThemeBlazorModule)
-    )]
-public class AntDesignThemeBlazorServerModule : AbpModule
+    typeof(AbpAspNetCoreComponentsWebAntDesignThemeModule)
+)]
+public class AbpAspNetCoreComponentsServerAntDesignThemeModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
@@ -23,24 +22,24 @@ public class AntDesignThemeBlazorServerModule : AbpModule
         {
             options
                 .StyleBundles
-                .Add(Bundling.BlazorStandardBundles.Styles.Global, bundle =>
+                .Add(BlazorStandardBundles.Styles.Global, bundle =>
                 {
-                    bundle.AddContributors(typeof(Bundling.BlazorGlobalStyleContributor));
+                    bundle.AddContributors(typeof(BlazorGlobalStyleContributor));
                 });
 
             options
                 .ScriptBundles
-                .Add(Bundling.BlazorStandardBundles.Scripts.Global, bundle =>
+                .Add(BlazorStandardBundles.Scripts.Global, bundle =>
                 {
-                    bundle.AddContributors(typeof(Bundling.BlazorGlobalScriptContributor));
+                    bundle.AddContributors(typeof(BlazorGlobalScriptContributor));
                 });
-
+            
             options
                 .StyleBundles
                 .Add(BlazorAntDesignThemeBundles.Styles.Global, bundle =>
                 {
                     bundle
-                        .AddBaseBundles(Bundling.BlazorStandardBundles.Styles.Global)
+                        .AddBaseBundles(BlazorStandardBundles.Styles.Global)
                         .AddContributors(typeof(BlazorAntDesignThemeStyleContributor));
                 });
 
@@ -49,11 +48,11 @@ public class AntDesignThemeBlazorServerModule : AbpModule
                 .Add(BlazorAntDesignThemeBundles.Scripts.Global, bundle =>
                 {
                     bundle
-                        .AddBaseBundles(Bundling.BlazorStandardBundles.Scripts.Global)
+                        .AddBaseBundles(BlazorStandardBundles.Scripts.Global)
                         .AddContributors(typeof(BlazorAntDesignThemeScriptContributor));
                 });
         });
-
+        
         Configure<AbpToolbarOptions>(options =>
         {
             options.Contributors.Add(new AntDesignThemeToolbarContributor());
