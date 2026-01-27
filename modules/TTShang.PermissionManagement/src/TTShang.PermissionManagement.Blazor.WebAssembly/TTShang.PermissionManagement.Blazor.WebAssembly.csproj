@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <Import Project="..\..\common.props"/>
+  <Import Project="..\..\common.props" />
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -8,12 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.AspNetCore.Components.WebAssembly.Theming" Version="10.0.2"/>
+    <PackageReference Include="Volo.Abp.PermissionManagement.HttpApi.Client" Version="10.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TTShang.PermissionManagement.Blazor\TTShang.PermissionManagement.Blazor.csproj"/>
-    <ProjectReference Include="..\TTShang.PermissionManagement.HttpApi.Client\TTShang.PermissionManagement.HttpApi.Client.csproj"/>
+    <ProjectReference Include="..\..\..\TTShang.AntDesignTheme\src\TTShang.AntDesignTheme.Blazor.WebAssembly\TTShang.AntDesignTheme.Blazor.WebAssembly.csproj" />
+    <ProjectReference Include="..\TTShang.PermissionManagement.Blazor\TTShang.PermissionManagement.Blazor.csproj" />
+    <!--<ProjectReference Include="..\TTShang.PermissionManagement.HttpApi.Client\TTShang.PermissionManagement.HttpApi.Client.csproj" />-->
   </ItemGroup>
 
 </Project>
