@@ -1,0 +1,13 @@
+.not-found-container {
+    text-align: center;
+    padding: 50px;
+}
+
+.not-found-container h1 {
+    font-size: 72px;
+    margin-bottom: 20px;
+}
+
+.not-found-container a {
+    color: #1890ff;
+}

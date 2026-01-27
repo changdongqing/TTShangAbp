@@ -1,6 +1,7 @@
 @using TTShang.AntDesignTheme.Blazor.Routing
 @using TTShang.AntDesignTheme.Blazor.Themes.AntDesignTheme
 @using Microsoft.Extensions.Options
+@using TTShang.Blazor.Client.Pages
 @inject IOptions<AbpRouterOptions> RouterOptions
 <Router AppAssembly="typeof(Program).Assembly" AdditionalAssemblies="RouterOptions.Value.AdditionalAssemblies">
     <Found Context="routeData">
@@ -10,4 +11,10 @@
             </NotAuthorized>
         </AuthorizeRouteView>
     </Found>
+    <NotFound>
+        <PageTitle>404 - Not Found</PageTitle>
+        <LayoutView Layout="typeof(DefaultLayout)">
+            <NotFound />
+        </LayoutView>
+    </NotFound>
 </Router>
