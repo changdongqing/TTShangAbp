@@ -31,11 +31,11 @@
              <ChildContent>
                 @if (CurrentTenant.Name != null)
                 {
-                    <span style="color: white;"><i>@CurrentTenant.Name</i>\@CurrentUser.UserName</span>
+                    <span><i>@CurrentTenant.Name</i>\@CurrentUser.UserName</span>
                 }
                 else
                 {
-                    <span style="color: white;">@CurrentUser.UserName</span>
+                    <span>@CurrentUser.UserName</span>
                 }
                 <Icon Type="down" />
              </ChildContent>
