@@ -1,52 +1,61 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AntDesign;
+using AntDesign.ProLayout;
 using TTShang.AntDesignTheme.Blazor.Settings;
 using Microsoft.AspNetCore.Components;
+using Volo.Abp.AspNetCore.Components.Web.Security;
+using Volo.Abp.UI.Navigation;
 
 namespace TTShang.AntDesignTheme.Blazor.Themes.AntDesignTheme;
 
-public partial class DefaultLayout
+public partial class DefaultLayout : IDisposable
 {
     [Inject]
     protected IAntDesignSettingsProvider AntDesignSettingsProvider { get; set; }
 
+    [Inject]
+    protected IMenuManager MenuManager { get; set; }
+
+    [Inject]
+    protected ApplicationConfigurationChangedService ApplicationConfigurationChangedService { get; set; }
+
     protected bool Collapsed { get; set; }
 
-    protected MenuPlacement MenuPlacement { get; set; }
-
-    protected MenuTheme MenuTheme { get; set; }
-
-    protected string HeaderClass { get; set; }
-
-    protected SiderTheme SiderTheme { get; set; }
-
-    protected string SiderStyle { get; set; } = "min-width:256px";
+    protected MenuDataItem[] MenuData { get; set; } = [];
 
     protected override async Task OnInitializedAsync()
     {
-        await SetLayout();
+        await LoadMenuDataAsync();
         AntDesignSettingsProvider.SettingChanged += OnSettingChanged;
+        ApplicationConfigurationChangedService.Changed += OnApplicationConfigurationChanged;
     }
 
     protected virtual async Task OnSettingChanged()
     {
-        await SetLayout();
         await InvokeAsync(StateHasChanged);
     }
 
-    private async Task SetLayout()
+    protected virtual async void OnApplicationConfigurationChanged()
     {
-        MenuTheme = await AntDesignSettingsProvider.GetMenuThemeAsync();
-        MenuPlacement = await AntDesignSettingsProvider.GetMenuPlacementAsync();
+        await LoadMenuDataAsync();
+        await InvokeAsync(StateHasChanged);
+    }
 
-        SiderTheme = MenuTheme  == MenuTheme.Light ? SiderTheme.Light : SiderTheme.Dark;
-        HeaderClass = MenuPlacement == MenuPlacement.Top ? "ant-design-header-top" : "ant-design-header-left";
-        HeaderClass = MenuTheme == MenuTheme.Light ? $"{HeaderClass} {HeaderClass}-light" : HeaderClass;
+    private async Task LoadMenuDataAsync()
+    {
+        var menu = await MenuManager.GetMainMenuAsync();
+        MenuData = MenuDataHelper.ConvertToMenuDataItems(menu);
     }
 
     protected virtual void OnCollapse()
     {
         Collapsed = !Collapsed;
-        SiderStyle = Collapsed ? "" : "min-width:256px";
+    }
+
+    public void Dispose()
+    {
+        AntDesignSettingsProvider.SettingChanged -= OnSettingChanged;
+        ApplicationConfigurationChangedService.Changed -= OnApplicationConfigurationChanged;
     }
 }
