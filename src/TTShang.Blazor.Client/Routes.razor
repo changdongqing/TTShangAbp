@@ -24,12 +24,20 @@
 @code {
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        await base.OnAfterRenderAsync(firstRender);
+        
         if (firstRender)
         {
             // Hide the loading mask after the first render completes
-            await JS.InvokeVoidAsync("hideAppLoadingMask");
+            try
+            {
+                await JS.InvokeVoidAsync("hideAppLoadingMask");
+            }
+            catch
+            {
+                // Silently catch any JS interop errors
+                // The mask will remain visible if this fails, but won't crash the app
+            }
         }
-        
-        await base.OnAfterRenderAsync(firstRender);
     }
 }

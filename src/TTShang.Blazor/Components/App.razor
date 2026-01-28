@@ -85,8 +85,8 @@
 <body class="abp-application-layout @rtl">
 
     <!-- Loading mask overlay -->
-    <div id="app-loading-mask">
-        <div class="loading-spinner"></div>
+    <div id="app-loading-mask" role="status" aria-live="polite" aria-label="应用程序正在加载">
+        <div class="loading-spinner" aria-hidden="true"></div>
         <div class="loading-text">正在加载中，请稍候...</div>
     </div>
 
@@ -110,7 +110,7 @@
     <script>
         // Function to hide the loading mask after Blazor has initialized
         window.hideAppLoadingMask = function() {
-            var mask = document.getElementById('app-loading-mask');
+            const mask = document.getElementById('app-loading-mask');
             if (mask) {
                 mask.classList.add('hidden');
                 // Remove from DOM after transition completes
