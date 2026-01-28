@@ -2,7 +2,9 @@
 @using TTShang.AntDesignTheme.Blazor.Themes.AntDesignTheme
 @using Microsoft.Extensions.Options
 @using TTShang.Blazor.Client.Pages
+@using Microsoft.JSInterop
 @inject IOptions<AbpRouterOptions> RouterOptions
+@inject IJSRuntime JS
 <Router AppAssembly="typeof(Program).Assembly" AdditionalAssemblies="RouterOptions.Value.AdditionalAssemblies">
     <Found Context="routeData">
         <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(DefaultLayout)">
@@ -18,3 +20,24 @@
         </LayoutView>
     </NotFound>
 </Router>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        
+        if (firstRender)
+        {
+            // Hide the loading mask after the first render completes
+            try
+            {
+                await JS.InvokeVoidAsync("hideAppLoadingMask");
+            }
+            catch
+            {
+                // Silently catch any JS interop errors
+                // The mask will remain visible if this fails, but won't crash the app
+            }
+        }
+    }
+}
