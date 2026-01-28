@@ -15,6 +15,12 @@ app {
     min-height: 100vh;
 }
 
+.ant-pro-basicLayout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .ant-design-header-top {
     background-color: #001529;
 }
@@ -161,10 +167,16 @@ app {
     color: #001529;
 }
 
-.ant-design-header-top-light .ant-dropdown-trigger{
-    color: #001529;
-}
-
 .ant-design-header-left-light .ant-dropdown-trigger{
     color: white;
+}
+
+.ant-design-header-top .ant-dropdown-trigger span,
+.ant-design-header-left-light .ant-dropdown-trigger span {
+    color: white;
+}
+
+.ant-design-header-top-light .ant-dropdown-trigger span,
+.ant-design-header-left .ant-dropdown-trigger span {
+    color: #001529;
 }
