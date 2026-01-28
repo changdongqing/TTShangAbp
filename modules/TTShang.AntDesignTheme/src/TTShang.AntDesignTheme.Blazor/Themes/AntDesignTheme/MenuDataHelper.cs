@@ -21,9 +21,10 @@ public static class MenuDataHelper
     {
         var item = new MenuDataItem
         {
-            Path = menuItem.Url?.TrimStart('/', '~') ?? "#",
+            // Only set clickable path for leaf items with URLs
+            Path = (menuItem.IsLeaf && menuItem.Url != null) ? menuItem.Url.TrimStart('/', '~') : "#",
             Name = menuItem.DisplayName,
-            Key = menuItem.ElementId ?? "MenuItem_" + menuItem.Name.Replace(".", "_"),
+            Key = menuItem.ElementId ?? "MenuItem_" + (menuItem.Name?.Replace(".", "_") ?? ""),
             Icon = menuItem.Icon,
             HideInMenu = menuItem.IsDisabled
         };

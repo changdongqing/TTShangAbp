@@ -4,6 +4,7 @@ using AntDesign;
 using AntDesign.ProLayout;
 using TTShang.AntDesignTheme.Blazor.Settings;
 using Microsoft.AspNetCore.Components;
+using Volo.Abp.AspNetCore.Components.Web.Security;
 using Volo.Abp.UI.Navigation;
 
 namespace TTShang.AntDesignTheme.Blazor.Themes.AntDesignTheme;
@@ -16,6 +17,9 @@ public partial class DefaultLayout : IDisposable
     [Inject]
     protected IMenuManager MenuManager { get; set; }
 
+    [Inject]
+    protected ApplicationConfigurationChangedService ApplicationConfigurationChangedService { get; set; }
+
     protected bool Collapsed { get; set; }
 
     protected MenuDataItem[] MenuData { get; set; } = [];
@@ -24,10 +28,17 @@ public partial class DefaultLayout : IDisposable
     {
         await LoadMenuDataAsync();
         AntDesignSettingsProvider.SettingChanged += OnSettingChanged;
+        ApplicationConfigurationChangedService.Changed += OnApplicationConfigurationChanged;
     }
 
     protected virtual async Task OnSettingChanged()
     {
+        await InvokeAsync(StateHasChanged);
+    }
+
+    protected virtual async void OnApplicationConfigurationChanged()
+    {
+        await LoadMenuDataAsync();
         await InvokeAsync(StateHasChanged);
     }
 
@@ -45,5 +56,6 @@ public partial class DefaultLayout : IDisposable
     public void Dispose()
     {
         AntDesignSettingsProvider.SettingChanged -= OnSettingChanged;
+        ApplicationConfigurationChangedService.Changed -= OnApplicationConfigurationChanged;
     }
 }

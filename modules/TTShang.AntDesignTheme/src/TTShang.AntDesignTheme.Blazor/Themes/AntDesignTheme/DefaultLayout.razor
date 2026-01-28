@@ -6,10 +6,14 @@
 @using Volo.Abp.Ui.LayoutHooks
 @using TTShang.AntDesignTheme.Blazor.Components.LayoutHooks
 @using AntDesign.ProLayout
+@using Volo.Abp.Ui.Branding
 @inject IOptions<AbpAntDesignThemeOptions> Options
+@inject IBrandingProvider BrandingProvider
 
 
 <AntDesign.ProLayout.BasicLayout 
+    Logo="@BrandingProvider.LogoUrl"
+    Title="@BrandingProvider.AppName"
     MenuData="MenuData"
     MenuAccordion
     @bind-Collapsed="Collapsed">
