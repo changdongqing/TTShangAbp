@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using OpenIddict.Abstractions;
 using System;
 using System.Net.Http;
+using TTShang.AntDesignTheme.Blazor;
 using TTShang.AntDesignTheme.Blazor.WebAssembly;
 using TTShang.Blazor.Client.Navigation;
 using TTShang.FeatureManagement.Blazor.WebAssembly;
@@ -62,6 +63,7 @@ public class TTShangBlazorClientModule : AbpModule
         //ConfigureBlazorise(context);
         ConfigureRouter(context);
         ConfigureMenu(context);
+        ConfigureTheme(context);
     }
 
 
@@ -79,6 +81,14 @@ public class TTShangBlazorClientModule : AbpModule
         Configure<AbpNavigationOptions>(options =>
         {
             options.MenuContributors.Add(new TTShangMenuContributor(context.Services.GetConfiguration()));
+        });
+    }
+
+    private void ConfigureTheme(ServiceConfigurationContext context)
+    {
+        Configure<AbpAntDesignThemeOptions>(options =>
+        {
+            options.EnableMultipleTabs = true;
         });
     }
 
