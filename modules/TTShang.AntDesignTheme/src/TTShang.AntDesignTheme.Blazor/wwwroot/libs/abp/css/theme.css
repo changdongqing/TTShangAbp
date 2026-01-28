@@ -167,10 +167,6 @@ app {
     color: #001529;
 }
 
-.ant-design-header-top-light .ant-dropdown-trigger{
-    color: #001529;
-}
-
 .ant-design-header-left-light .ant-dropdown-trigger{
     color: white;
 }
