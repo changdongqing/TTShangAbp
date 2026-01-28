@@ -5,81 +5,44 @@
 @using TTShang.AntDesignTheme.Blazor.Layout
 @using Volo.Abp.Ui.LayoutHooks
 @using TTShang.AntDesignTheme.Blazor.Components.LayoutHooks
+@using AntDesign.ProLayout
 @inject IOptions<AbpAntDesignThemeOptions> Options
 
 
-@if (Options.Value.Menu.Placement == MenuPlacement.Top)
-{
-    <Layout Class="ant-design-layout">
-        <Header Class="@HeaderClass">
-            <Branding/>
-            <MainMenu Placement="@MenuPlacement" Theme="@MenuTheme" Collapsed="@Collapsed"/>
-            <Row Justify="RowJustify.End">
-                <NavToolbar/>
-            </Row>
-        </Header>
-        <Content Class="ant-design-content">
-            <PageAlert/>
-            <div class="ant-design-body-content">
-                <LayoutHook Name="@LayoutHooks.Body.First" Layout="@StandardLayouts.Application" />
+<AntDesign.ProLayout.BasicLayout 
+    MenuData="MenuData"
+    MenuAccordion
+    @bind-Collapsed="Collapsed">
+    <HeaderContentRender>
+        <Space Size="@("24")">
+            <SpaceItem>
+                <Icon Class="action" Type="@(Collapsed?"menu-unfold":"menu-fold")" OnClick="OnCollapse" />
+            </SpaceItem>
+        </Space>
+    </HeaderContentRender>
+    <RightContentRender>
+        <Row Justify="RowJustify.End">
+            <NavToolbar/>
+        </Row>
+    </RightContentRender>
+    <ChildContent>
+        <PageAlert/>
+        <div class="ant-design-body-content">
+            <LayoutHook Name="@LayoutHooks.Body.First" Layout="@StandardLayouts.Application" />
+            @if (!Options.Value.EnableMultipleTabs)
+            {
                 @Body
-                <LayoutHook Name="@LayoutHooks.Body.Last" Layout="@StandardLayouts.Application" />
-            </div>
-            <DynamicLayoutComponent />
-            <UiPageProgress/>
-        </Content>
+            }
+            else
+            {
+                <ReuseTabs Class="ant-design-body-reusetabs" TabPaneClass="ant-design-body-reusetabs-tabpane" Draggable></ReuseTabs>
+            }
+            <LayoutHook Name="@LayoutHooks.Body.Last" Layout="@StandardLayouts.Application" />
+        </div>
+        <DynamicLayoutComponent />
+        <UiPageProgress/>
+    </ChildContent>
+    <FooterRender>
         <Footer Class="ant-design-footer"></Footer>
-    </Layout>
-}
-else
-{
-    <Layout Class="ant-design-layout">
-        <Sider
-            Style="@SiderStyle"
-            Class="ant-design-side"
-            Theme="@SiderTheme"
-            Collapsible
-            NoTrigger
-            Collapsed=Collapsed>
-            <Branding Collapsed="@Collapsed"/>
-            <MainMenu Placement="@MenuPlacement" Theme="@MenuTheme" Collapsed="@Collapsed"/>
-        </Sider>
-        <Layout Class="ant-design-layout">
-            <Header Class="@HeaderClass">
-                <div style="float: left">
-                    @if (Collapsed)
-                    {
-                        <Icon Type="menu-unfold" Theme="IconThemeType.Outline" Class="trigger" OnClick="OnCollapse"/>
-                    }
-                    else
-                    {
-                        <Icon Type="menu-fold" Theme="IconThemeType.Outline" Class="trigger" OnClick="OnCollapse"/>
-                    }
-                </div>
-
-                <Row Justify="RowJustify.End">
-                    <NavToolbar/>
-                </Row>
-                
-            </Header>
-            <Content Class="ant-design-content">
-                <PageAlert/>
-                <div class="ant-design-body-content">
-                    <LayoutHook Name="@LayoutHooks.Body.First" Layout="@StandardLayouts.Application" />
-                    @if (!Options.Value.EnableMultipleTabs)
-                    {
-                        @Body
-                    }
-                    else
-                    {
-                        <ReuseTabs Class="ant-design-body-reusetabs" TabPaneClass="ant-design-body-reusetabs-tabpane" Draggable></ReuseTabs>
-                    }
-                    <LayoutHook Name="@LayoutHooks.Body.Last" Layout="@StandardLayouts.Application" />
-                </div>
-                <DynamicLayoutComponent />
-                <UiPageProgress/>
-            </Content>
-            <Footer Class="ant-design-footer"></Footer>
-        </Layout>
-    </Layout>
-}
+    </FooterRender>
+</AntDesign.ProLayout.BasicLayout>
